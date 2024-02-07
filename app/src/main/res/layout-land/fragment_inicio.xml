@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InicioSesion.FragmentInicio"
+    android:orientation="vertical"
+    android:background="@color/BabyBlue"
+    android:id="@+id/FondoMain">
+
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_height="370dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/BotonCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="@string/soy_cliente"
+            android:textColor="@color/blue"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/BotonTrabajador"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/white"
+            android:text="@string/soy_trabajador"
+            android:textColor="#F44336"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/NombreDeUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/BotonTrabajador"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="-113dp"
+            android:hint="@string/nombre_de_usuario" />
+
+        <EditText
+            android:id="@+id/Contrasenna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/NombreDeUsuario"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="-74dp"
+            android:hint="Contaseña"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/BotonCrearCuenta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/Contrasenna"
+            android:layout_marginBottom="-50dp"
+            android:backgroundTint="@color/white"
+            android:text="@string/crear_cuenta"
+            android:textColor="@color/blue" />
+
+        <Button
+            android:id="@+id/BotonIniciarSesion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="@color/white"
+            android:text="@string/iniciar_sesion"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

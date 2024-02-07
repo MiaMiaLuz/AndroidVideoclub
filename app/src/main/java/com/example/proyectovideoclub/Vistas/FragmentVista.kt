@@ -8,16 +8,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectovideoclub.Clases.Pelicula
+import com.example.proyectovideoclub.Clases.Usuario
 import com.example.proyectovideoclub.R
 
 class FragmentVista : Fragment() {
-
     private lateinit var recycler : RecyclerView
     private lateinit var peliculas : ArrayList<Pelicula>
+    private lateinit var usuario : Usuario
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            usuario = arguments?.getSerializable("usuario") as Usuario
         }
     }
 

@@ -3,7 +3,7 @@ package com.example.api_kotlin
 import android.util.Log
 import com.example.proyectovideoclub.DataBase.PeliDAO
 import com.example.proyectovideoclub.Clases.Pelicula
-import com.example.proyectovideoclub.Clases.Ususario
+import com.example.proyectovideoclub.Clases.Usuario
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,12 +31,12 @@ class PeliculaService {
             }
         })
     }
-    fun createUser(ususario: Ususario) {
-        getRetrofit().create(PeliDAO::class.java).createUser(ususario).enqueue(object : Callback<Ususario> {
-            override fun onResponse(call: Call<Ususario>, response: Response<Ususario>) {
+    fun createUser(usuario: Usuario) {
+        getRetrofit().create(PeliDAO::class.java).createUser(usuario).enqueue(object : Callback<Usuario> {
+            override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                 Log.d("TAG", "RESPONSE: $response")
             }
-            override fun onFailure(call: Call<Ususario>, t: Throwable) {
+            override fun onFailure(call: Call<Usuario>, t: Throwable) {
                 Log.d("TAG", "Error")
                 Log.d("TAG", "ERROR: $t")
             }
@@ -47,8 +47,8 @@ class PeliculaService {
         return getRetrofit().create(PeliDAO::class.java).getPelis()
     }
 
-    fun getLibro(id: Int) : Call<Pelicula> {
+    /*fun getLibro(id: Int) : Call<List<Pelicula>> {
         return getRetrofit().create(PeliDAO::class.java).getPelis(id)
-    }
+    }*/
 
 }

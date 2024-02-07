@@ -3,12 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Vistas.FragmentVista">
+
+    <!--niciar sesión.
+- Ver la información de los alquileres de las películas.
+- Filtrar la información de los alquileres por DNI del usuario.
+- Realizar la devolución de una película.
+- Añadir nuevas películas al catálogo. Las imágenes para la portada se
+cogerán de los archivos del dispositivo móvil.
+- Modificar la información de una película del catálogo.
+- Eliminar una película del catálogo, siempre que no esté alquilada-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/view"
         />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/botonADD"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="15dp"
+        android:src="@android:drawable/ic_menu_add"
+        android:clickable="true"
+        />
+
 
 </FrameLayout>
