@@ -31,7 +31,6 @@ class FragmentInicio : Fragment(), View.OnClickListener {
             usuario = arguments?.getSerializable("usuario") as Usuario
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -46,9 +45,13 @@ class FragmentInicio : Fragment(), View.OnClickListener {
         CrearCuenta = view.findViewById(R.id.BotonCrearCuenta)
         InicioSesion = view.findViewById(R.id.BotonIniciarSesion)
 
+        BotonCliente.setOnClickListener(this)
+        BotonTrabajador.setOnClickListener(this)
+        CrearCuenta.setOnClickListener(this)
+        InicioSesion.setOnClickListener(this)
+
         return view
     }
-
     override fun onClick(v: View?) {
         if(v?.id == R.id.BotonCliente){
             usuario.Trabajador = false
@@ -63,7 +66,6 @@ class FragmentInicio : Fragment(), View.OnClickListener {
             }
         }
     }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is conexion)

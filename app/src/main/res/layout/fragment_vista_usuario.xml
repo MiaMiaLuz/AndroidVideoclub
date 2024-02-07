@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Vistas_Usuario.FragmentVistaUsuario">
+
+    <!--Registrarse en la aplicación.
+        - Iniciar sesión.
+        - Ver el catálogo de películas disponibles.
+        - Filtrar las películas de diferentes formas: título, director, año…
+        - Alquilar una película (máximo 5 alquileres a la vez) La fecha de devolución
+        siempre será 14 días después de la fecha actual.
+        - Cambiar su contraseña. Las contraseñas siempre se establecerán en
+        MD5.
+        - Ver el estado de sus propios alquileres, y pedir el aumento de 5 días para
+        la devolución. (Sólo se puede pedir 1 vez por alquiler).
+     -->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:id="@+id/viewUser"
+        />
+
+</FrameLayout>
