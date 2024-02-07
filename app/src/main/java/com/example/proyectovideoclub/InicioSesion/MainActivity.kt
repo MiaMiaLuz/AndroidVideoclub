@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.example.proyectovideoclub.Clases.User
+import com.example.proyectovideoclub.Clases.Ususario
 import com.example.proyectovideoclub.Clases.conexion
 import com.example.proyectovideoclub.R
 
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener , conexion{
     private lateinit var Contrasenna : EditText
     private lateinit var CrearCuenta : Button
     private lateinit var InicioSesion : Button
-    private var usuario = User()
+    private var usuario = Ususario()
     private lateinit var dialog : DialogCrearCuenta
 
     override fun onCreate(savedInstanceState: Bundle?) {

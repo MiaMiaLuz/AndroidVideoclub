@@ -11,13 +11,14 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import com.example.proyectovideoclub.Clases.User
+import com.example.proyectovideoclub.Clases.Ususario
 import com.example.proyectovideoclub.Clases.conexion
 import com.example.proyectovideoclub.R
 
 class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextWatcher {
 
-    var usuario = User()
+    //variables que vamos a necesitar
+    var usuario = Ususario()
     private lateinit var dialog : AlertDialog
     private lateinit var DNI : EditText
     private lateinit var Nombre : EditText
@@ -25,6 +26,7 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
     private lateinit var Pass : EditText
     var finish : Boolean = false
     var conexion : conexion? = null
+
 
     constructor(finish : Boolean){
         this.finish = finish

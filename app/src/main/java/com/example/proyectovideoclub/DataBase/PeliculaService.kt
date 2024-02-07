@@ -3,7 +3,7 @@ package com.example.api_kotlin
 import android.util.Log
 import com.example.proyectovideoclub.DataBase.PeliDAO
 import com.example.proyectovideoclub.Clases.Pelicula
-import com.example.proyectovideoclub.Clases.User
+import com.example.proyectovideoclub.Clases.Ususario
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,12 +31,12 @@ class PeliculaService {
             }
         })
     }
-    fun createUser(user: User) {
-        getRetrofit().create(PeliDAO::class.java).createUser(user).enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
+    fun createUser(ususario: Ususario) {
+        getRetrofit().create(PeliDAO::class.java).createUser(ususario).enqueue(object : Callback<Ususario> {
+            override fun onResponse(call: Call<Ususario>, response: Response<Ususario>) {
                 Log.d("TAG", "RESPONSE: $response")
             }
-            override fun onFailure(call: Call<User>, t: Throwable) {
+            override fun onFailure(call: Call<Ususario>, t: Throwable) {
                 Log.d("TAG", "Error")
                 Log.d("TAG", "ERROR: $t")
             }

@@ -4,13 +4,14 @@ import java.io.Serializable
 import java.sql.Time
 
 class Pelicula : Serializable {
-    private var ID : Int = 0
-    private lateinit var titulo : String
-    private lateinit var duracion : Time
-    private var year : Int = 0
-    private lateinit var portada : String
-    private var ID_director : Int = 0
-    private var disponible : Boolean = true
+    var ID : Int = 0
+    lateinit var titulo : String
+    lateinit var duracion : Time
+    var year : Int = 0
+    lateinit var portada : String
+    var ID_director : Int = 0
+    var disponible : Boolean = true
+    var imagen : Int = 0
 
     constructor(
         ID: Int,

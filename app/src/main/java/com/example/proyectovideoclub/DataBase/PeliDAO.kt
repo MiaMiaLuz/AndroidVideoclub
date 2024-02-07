@@ -1,7 +1,7 @@
 package com.example.proyectovideoclub.DataBase
 
 import com.example.proyectovideoclub.Clases.Pelicula
-import com.example.proyectovideoclub.Clases.User
+import com.example.proyectovideoclub.Clases.Ususario
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,5 +19,5 @@ interface PeliDAO {
     fun getPelis(@Query("id") id: Int): Call<Pelicula>
 
     @POST("crearUser.php")
-    fun createUser(@Body user: User): Call<User>
+    fun createUser(@Body ususario: Ususario): Call<Ususario>
 }

@@ -1,6 +1,6 @@
 package com.example.proyectovideoclub.Clases
 
-class User {
+class Ususario {
     var ID : Int = 0
     lateinit var DNI : String
     lateinit var Nombre : String
