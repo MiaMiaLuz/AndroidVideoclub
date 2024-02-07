@@ -10,6 +10,8 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.proyectovideoclub.Clases.Usuario
 import com.example.proyectovideoclub.Clases.conexion
@@ -19,6 +21,7 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
 
     //variables que vamos a necesitar
     var usuario = Usuario()
+    private lateinit var fondo : ConstraintLayout
     private lateinit var dialog : AlertDialog
     private lateinit var DNI : EditText
     private lateinit var Nombre : EditText
@@ -38,6 +41,7 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
         val view : View = inflater.inflate(R.layout.dialoglayout1, null)
         builder.setView(view)
 
+        fondo = view.findViewById(R.id.FondoMain)
         DNI = view.findViewById(R.id.DialogDNI)
         Nombre = view.findViewById(R.id.DialogNombre)
         NombreU = view.findViewById(R.id.DialogNombreUsu)
@@ -49,6 +53,11 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
         Pass.addTextChangedListener(this)
 
         if(finish && savedInstanceState != null){
+            if(usuario.Trabajador){
+                fondo.background = ContextCompat.getDrawable(requireContext(), R.drawable.fondoiniciob)
+            } else {
+                fondo.background = ContextCompat.getDrawable(requireContext(), R.drawable.fondoinicio)
+            }
             DNI.setText(savedInstanceState.getString("DNI"))
             Nombre.setText(savedInstanceState.getString("Nombre"))
             NombreU.setText(savedInstanceState.getString("NombreU"))
@@ -66,19 +75,15 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
     override fun onClick(dialog: DialogInterface?, which: Int) {
         when(which){
             -1 ->{
-                if (DNI.text.isBlank() || Nombre.text.isBlank() || NombreU.text.isBlank() || Pass.text.isBlank()) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.rellena_todos_los_campos), Toast.LENGTH_SHORT
-                    ).show()
+                usuario.DNI = DNI.text.toString()
+                usuario.Nombre = Nombre.text.toString()
+                usuario.Login = NombreU.text.toString()
+                usuario.Pass = Pass.text.toString()
+                /*if (){
                     conexion?.repetirValoresInicioSession(true)
                 } else {
-                    usuario.DNI = DNI.text.toString()
-                    usuario.Nombre = Nombre.text.toString()
-                    usuario.Login = NombreU.text.toString()
-                    usuario.Pass = Pass.text.toString()
                     conexion?.repetirValoresInicioSession(false)
-                }
+                }*/
             }
             -2 ->{
                 Toast.makeText(requireContext(),
@@ -106,12 +111,13 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
         super.onDetach()
         conexion = null
     }
-
+    //Evita que
     override fun onStart() {
         super.onStart()
         dialog.getButton(Dialog.BUTTON_POSITIVE).isEnabled = false
     }
 
+    //Evita que se introduzca usuario sin datos
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
     }

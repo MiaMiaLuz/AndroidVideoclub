@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".InicioSesion.FragmentInicio"
     android:orientation="vertical"
-    android:background="@color/BabyBlue"
     android:id="@+id/FondoMain">
 
     <RelativeLayout
         android:layout_width="350dp"
         android:layout_height="400dp"
-        android:background="@color/white"
+        android:background="@drawable/roundedshapes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
