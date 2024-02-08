@@ -1,13 +1,10 @@
 package com.example.proyectovideoclub.InicioSesion
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import com.example.proyectovideoclub.Clases.Usuario
+import androidx.appcompat.app.AppCompatActivity
+import com.example.proyectovideoclub.Clases.Pelicula
 import com.example.proyectovideoclub.Clases.conexion
+import com.example.proyectovideoclub.DataBase.PeliculaController
 import com.example.proyectovideoclub.R
 
 class MainActivity : AppCompatActivity() , conexion{
@@ -19,6 +16,9 @@ class MainActivity : AppCompatActivity() , conexion{
         var fragmentTransaction = fragmentManager.beginTransaction()
         var finicio = FragmentInicio()
         fragmentTransaction.replace(R.id.frame, finicio).commit()
+        val lc = PeliculaController()
+        lc.getPeliculas()
+        lc.getPelicula(5)
 
     }
     override fun repetirValoresInicioSession(finish: Boolean) {
