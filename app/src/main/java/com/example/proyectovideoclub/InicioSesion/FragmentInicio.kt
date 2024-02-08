@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.proyectovideoclub.Clases.Usuario
 import com.example.proyectovideoclub.Clases.conexion
 import com.example.proyectovideoclub.R
@@ -45,6 +46,12 @@ class FragmentInicio : Fragment(), View.OnClickListener {
         CrearCuenta = view.findViewById(R.id.BotonCrearCuenta)
         InicioSesion = view.findViewById(R.id.BotonIniciarSesion)
 
+        if(usuario.Trabajador){
+            fondo.background = ContextCompat.getDrawable(requireContext(), R.drawable.fondoiniciob)
+        } else {
+            fondo.background = ContextCompat.getDrawable(requireContext(), R.drawable.fondoinicio)
+        }
+
         BotonCliente.setOnClickListener(this)
         BotonTrabajador.setOnClickListener(this)
         CrearCuenta.setOnClickListener(this)
@@ -55,8 +62,10 @@ class FragmentInicio : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         if(v?.id == R.id.BotonCliente){
             usuario.Trabajador = false
+            fondo.background = ContextCompat.getDrawable(requireContext(), R.drawable.fondoinicio)
         } else if(v?.id == R.id.BotonTrabajador){
             usuario.Trabajador = true
+            fondo.background = ContextCompat.getDrawable(requireContext(), R.drawable.fondoiniciob)
         } else if(v?.id == R.id.BotonCrearCuenta){
             conexion?.triggerDialog()
         } else if(v?.id == R.id.BotonIniciarSesion){

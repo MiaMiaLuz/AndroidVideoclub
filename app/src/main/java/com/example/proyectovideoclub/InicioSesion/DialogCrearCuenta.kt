@@ -21,7 +21,6 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
 
     //variables que vamos a necesitar
     var usuario = Usuario()
-    private lateinit var fondo : ConstraintLayout
     private lateinit var dialog : AlertDialog
     private lateinit var DNI : EditText
     private lateinit var Nombre : EditText
@@ -41,7 +40,6 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
         val view : View = inflater.inflate(R.layout.dialoglayout1, null)
         builder.setView(view)
 
-        fondo = view.findViewById(R.id.FondoMain)
         DNI = view.findViewById(R.id.DialogDNI)
         Nombre = view.findViewById(R.id.DialogNombre)
         NombreU = view.findViewById(R.id.DialogNombreUsu)
@@ -53,11 +51,7 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
         Pass.addTextChangedListener(this)
 
         if(finish && savedInstanceState != null){
-            if(usuario.Trabajador){
-                fondo.background = ContextCompat.getDrawable(requireContext(), R.drawable.fondoiniciob)
-            } else {
-                fondo.background = ContextCompat.getDrawable(requireContext(), R.drawable.fondoinicio)
-            }
+
             DNI.setText(savedInstanceState.getString("DNI"))
             Nombre.setText(savedInstanceState.getString("Nombre"))
             NombreU.setText(savedInstanceState.getString("NombreU"))
