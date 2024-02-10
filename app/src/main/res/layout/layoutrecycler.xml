@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/disponible"
-    android:orientation="vertical">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="7dp"
+    app:cardElevation="10dp"
+    app:cardMaxElevation="10dp"
+    app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="false"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/LinearPrincipal"
+        android:layout_height="match_parent"
+        android:id="@+id/disponible"
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
             android:id="@+id/Foto"
-            />
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" />
+
         <LinearLayout
+            android:id="@+id/contenido"
             android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:id="@+id/contenido"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/Titulo"
-                android:layout_marginVertical="15dp"
-                android:text="Título"
-                />
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:text="Título" />
+
+            <TextView
                 android:id="@+id/Duracion"
-                android:layout_marginVertical="15dp"
-                android:text="Duración"
-                />
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:text="Duración" />
+
+            <TextView
                 android:id="@+id/Año"
-                android:layout_marginVertical="15dp"
-                android:text="Año"
-                />
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Director"
                 android:layout_marginVertical="15dp"
-                android:text="Director"
-                />
+                android:text="Año" />
+
+            <TextView
+                android:id="@+id/Director"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:text="Director" />
         </LinearLayout>
 
     </LinearLayout>

@@ -5,35 +5,34 @@ import java.sql.Time
 
 class Pelicula : Serializable {
     var ID : Int = 0
-    lateinit var titulo : String
-    lateinit var duracion : Time
+    var titulo : String
+    var duracion : String
     var year : Int = 0
-    lateinit var portada : String
+    var portada : String
     var ID_director : Int = 0
     var disponible : Boolean = true
     var imagen : Int = 0
+    var nombreDirector : String
 
     constructor(
-        ID: Int,
         titulo: String,
-        duracion: Time,
+        duracion: String,
         año: Int,
         portada: String,
         ID_director: Int,
         disponible: Boolean,
+        nombreDirector: String
     ) {
-        this.ID = ID
         this.titulo = titulo
         this.duracion = duracion
         this.year = año
         this.portada = portada
         this.ID_director = ID_director
         this.disponible = disponible
+        this.nombreDirector = nombreDirector
     }
 
     override fun toString(): String {
         return "$titulo"
     }
-
-
 }

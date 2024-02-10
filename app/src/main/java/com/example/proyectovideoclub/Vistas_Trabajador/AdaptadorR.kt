@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -29,10 +30,9 @@ class AdaptadorR(val peliculas : ArrayList<Pelicula>): RecyclerView.Adapter<Adap
         }
         holder.foto.setImageResource(peli.imagen)
         holder.titulo.text = peli.titulo
-        holder.duracion.text = peli.duracion.toString()
+        holder.duracion.text = peli.duracion
         holder.año.text = peli.year.toString()
-        //HACER RECUPERACION DE BBDD
-        holder.director.text = peli.ID_director.toString()
+        holder.director.text = peli.nombreDirector
     }
 
     override fun getItemCount(): Int {
@@ -40,7 +40,7 @@ class AdaptadorR(val peliculas : ArrayList<Pelicula>): RecyclerView.Adapter<Adap
     }
 
     class ViewHolder(v: View, context: Context):RecyclerView.ViewHolder(v){
-        var layout : CardView
+        var layout : LinearLayout
         var foto : ImageView
         var titulo : TextView
         var duracion : TextView

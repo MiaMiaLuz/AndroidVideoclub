@@ -8,16 +8,21 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.widget.EditText
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.example.proyectovideoclub.Callbacks.UsuarioCallback
+import com.example.proyectovideoclub.Callbacks.UsuariosCallback
+import com.example.proyectovideoclub.Clases.Encriptador
 import com.example.proyectovideoclub.Clases.Usuario
 import com.example.proyectovideoclub.Clases.conexion
+import com.example.proyectovideoclub.DataBase.PeliculaController
 import com.example.proyectovideoclub.R
 
-class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextWatcher {
+class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextWatcher{
 
     //variables que vamos a necesitar
     var usuario = Usuario()
@@ -29,8 +34,9 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
     var finish : Boolean = false
     var conexion : conexion? = null
 
-    constructor(finish : Boolean){
+    constructor(finish : Boolean, usuario: Usuario){
         this.finish = finish
+        this.usuario = usuario
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -50,14 +56,6 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
         NombreU.addTextChangedListener(this)
         Pass.addTextChangedListener(this)
 
-        if(finish && savedInstanceState != null){
-
-            DNI.setText(savedInstanceState.getString("DNI"))
-            Nombre.setText(savedInstanceState.getString("Nombre"))
-            NombreU.setText(savedInstanceState.getString("NombreU"))
-            Pass.setText(savedInstanceState.getString("Pass"))
-        }
-
         builder.setTitle("Crear una cuenta")
         builder.setPositiveButton("Aceptar", this)
         builder.setNegativeButton("Cancelar", this)
@@ -67,34 +65,46 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
     }
 
     override fun onClick(dialog: DialogInterface?, which: Int) {
+        var encriptador = Encriptador()
         when(which){
             -1 ->{
+                var crearUser = true
                 usuario.DNI = DNI.text.toString()
                 usuario.Nombre = Nombre.text.toString()
                 usuario.Login = NombreU.text.toString()
-                usuario.Pass = Pass.text.toString()
-                /*if (){
-                    conexion?.repetirValoresInicioSession(true)
-                } else {
-                    conexion?.repetirValoresInicioSession(false)
-                }*/
+                usuario.Pass = encriptador.encriptar(Pass.text.toString())
+
+                val lc = PeliculaController()
+                lc.getUsuario(usuario.Login, object : UsuarioCallback{
+                    override fun onUsuarioReceived(usuarioL: Usuario?) {
+                        if(usuarioL?.Login != "") {
+                            Toast.makeText(
+                                requireContext(),
+                                "No se puede crear porque el usuario ya existe",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            lc.createUsuario(usuario)
+                            Toast.makeText(
+                                requireContext(),
+                                "Usuario creado correctamente",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                    override fun onFailure(errorMessage: String?) {
+                    }
+                })
+
             }
             -2 ->{
                 Toast.makeText(requireContext(),
                     getString(R.string.has_elegido_no_crear_un_usuario), Toast.LENGTH_LONG).show()
-                conexion?.repetirValoresInicioSession(false)
+                conexion?.repetirValoresInicioSession(false, usuario)
             }
         }
 
     }
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("DNI", DNI.text.toString())
-        outState.putString("Nombre", Nombre.text.toString())
-        outState.putString("NombreU", NombreU.text.toString())
-        outState.putString("PASS", Pass.text.toString())
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is conexion){
@@ -105,7 +115,7 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
         super.onDetach()
         conexion = null
     }
-    //Evita que
+    //Vuelve el botón aceptar no disponible
     override fun onStart() {
         super.onStart()
         dialog.getButton(Dialog.BUTTON_POSITIVE).isEnabled = false
@@ -122,4 +132,5 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
     override fun afterTextChanged(s: Editable?) {
 
     }
+    //Añadir comprobacion DNI si da tiempo
 }

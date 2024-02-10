@@ -4,6 +4,7 @@ import java.lang.StringBuilder
 import java.security.MessageDigest
 
 class Encriptador() {
+    //Encripta las contraseñas
     fun encriptar(pass : String) : String {
         var passEncriptada = StringBuilder()
         for(a in pass){
@@ -11,14 +12,10 @@ class Encriptador() {
         }
         return passEncriptada.toString()
     }
-
-
-    fun comparar(pass: String): Boolean {
-        var passEncriptada = StringBuilder()
-        for(a in pass){
-            passEncriptada.append(Integer.toHexString(0xff and a.code))
-        }
-
-        return true
+    //Compara la contraseña introducida con la guardada
+    fun comparar(pass: String, passC:String): Boolean {
+        var passEn = encriptar(pass)
+        return passC == passEn
     }
+
 }

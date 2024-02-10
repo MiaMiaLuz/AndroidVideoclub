@@ -1,11 +1,13 @@
 package com.example.proyectovideoclub.Clases
 
-class Usuario {
+import java.io.Serializable
+
+class Usuario: Serializable{
     var ID : Int = 0
-    lateinit var DNI : String
-    lateinit var Nombre : String
-    lateinit var Login : String
-    lateinit var Pass : String
+    var DNI : String = ""
+    var Nombre : String = ""
+    var Login : String = ""
+    var Pass : String = ""
     var Trabajador : Boolean = false
     var Bloqueado : Boolean = false
 
@@ -17,6 +19,10 @@ class Usuario {
         this.Pass = Pass
     }
     constructor()
+
+    override fun toString(): String {
+        return "Usuario(ID=$ID, DNI='$DNI', Nombre='$Nombre', Login='$Login', Pass='$Pass', Trabajador=$Trabajador, Bloqueado=$Bloqueado)"
+    }
 
 
 }

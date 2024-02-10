@@ -7,16 +7,16 @@ class Alquiler : Serializable {
     private var IDAlquiler : Int = 0
     private var IDPelicula: Int = 0
     private var IDUsuario: Int = 0
-    private lateinit var fechaAlquiler : Date
-    private lateinit var fechaDevolucion : Date
+    private var fechaAlquiler : String
+    private var fechaDevolucion : String
     private var extendido : Boolean = false
 
     constructor(
         IDAlquiler: Int,
         IDPelicula: Int,
         IDUsuario: Int,
-        fechaAlquiler: Date,
-        fechaDevolucion: Date,
+        fechaAlquiler: String,
+        fechaDevolucion: String,
     ) {
         this.IDAlquiler = IDAlquiler
         this.IDPelicula = IDPelicula
