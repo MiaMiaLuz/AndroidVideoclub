@@ -8,15 +8,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.widget.EditText
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.proyectovideoclub.Callbacks.UsuarioCallback
-import com.example.proyectovideoclub.Callbacks.UsuariosCallback
-import com.example.proyectovideoclub.Clases.Encriptador
+import com.example.proyectovideoclub.Clases.PasswordChecker
 import com.example.proyectovideoclub.Clases.Usuario
 import com.example.proyectovideoclub.Clases.conexion
 import com.example.proyectovideoclub.DataBase.PeliculaController
@@ -33,10 +29,12 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
     private lateinit var Pass : EditText
     var finish : Boolean = false
     var conexion : conexion? = null
+    var contexto : Context
 
-    constructor(finish : Boolean, usuario: Usuario){
+    constructor(context: Context, finish : Boolean, usuario: Usuario){
         this.finish = finish
         this.usuario = usuario
+        this.contexto = context
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -65,28 +63,28 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
     }
 
     override fun onClick(dialog: DialogInterface?, which: Int) {
-        var encriptador = Encriptador()
+        var passwordChecker = PasswordChecker()
         when(which){
             -1 ->{
                 var crearUser = true
                 usuario.DNI = DNI.text.toString()
                 usuario.Nombre = Nombre.text.toString()
                 usuario.Login = NombreU.text.toString()
-                usuario.Pass = encriptador.encriptar(Pass.text.toString())
+                usuario.Pass = passwordChecker.encriptar(Pass.text.toString())
 
                 val lc = PeliculaController()
                 lc.getUsuario(usuario.Login, object : UsuarioCallback{
                     override fun onUsuarioReceived(usuarioL: Usuario?) {
                         if(usuarioL?.Login != "") {
                             Toast.makeText(
-                                requireContext(),
-                                "No se puede crear porque el usuario ya existe",
+                                contexto,
+                                getString(R.string.no_se_puede_crear_porque_el_usuario_ya_existe),
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
                             lc.createUsuario(usuario)
                             Toast.makeText(
-                                requireContext(),
+                                contexto,
                                 "Usuario creado correctamente",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -130,7 +128,18 @@ class DialogCrearCuenta : DialogFragment, DialogInterface.OnClickListener, TextW
         dialog.getButton(Dialog.BUTTON_POSITIVE).isEnabled = DNI.text.isNotBlank() && Nombre.text.isNotBlank() && NombreU.text.isNotBlank() && Pass.text.isNotBlank()
     }
     override fun afterTextChanged(s: Editable?) {
-
+        /*if(DNI.text.isNotBlank() && Nombre.text.isNotBlank() && NombreU.text.isNotBlank() && Pass.text.isNotBlank()) {
+            var passwordChecker = PasswordChecker()
+            if (!passwordChecker.comprobar(usuario.Pass)) {
+                Toast.makeText(
+                    contexto,
+                    getString(R.string.la_contrase_a_debe_tener_caracteres_especiales_1_y_tener_como_minimo_7_caracteres),
+                    Toast.LENGTH_SHORT
+                ).show()
+                dialog.getButton(Dialog.BUTTON_POSITIVE).isEnabled = false
+            } else {
+                dialog.getButton(Dialog.BUTTON_POSITIVE).isEnabled = true
+            }
+        }*/
     }
-    //Añadir comprobacion DNI si da tiempo
 }

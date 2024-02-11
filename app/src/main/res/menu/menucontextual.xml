@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Devolver pelicula" android:id="@+id/devolver"></item>
-    <item android:title="Extender periodo de devolucion" android:id="@+id/extender"></item>
     <item android:title="Modificar pelicula" android:id="@+id/modificar"></item>
     <item android:title="Eliminar pelicula" android:id="@+id/eliminar"></item>
 </menu>

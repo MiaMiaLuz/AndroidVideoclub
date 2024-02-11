@@ -1,7 +1,9 @@
 package com.example.proyectovideoclub.DataBase;
 
+import com.example.proyectovideoclub.Clases.Alquiler;
 import com.example.proyectovideoclub.Clases.Director;
 import com.example.proyectovideoclub.Clases.Pelicula;
+import com.example.proyectovideoclub.Clases.Respuesta;
 import com.example.proyectovideoclub.Clases.Usuario;
 
 import java.util.List;
@@ -26,20 +28,28 @@ public interface PeliculaDAO {
     //PELICULAS
     // Método para insertar una pelicula
     @POST("crearPelicula.php")
-    public Call<Pelicula> createPelicula(@Body Pelicula pelicula);
-
-    // Método para obtener todas los libros
+    public Call<Respuesta> createPelicula(@Body Pelicula pelicula);
+    // Método para obtener todas las peliculas
     @GET("getPeliculas.php")
-    public Call<List<Pelicula>>getPeliculas();
+    public Call<List<Pelicula>>getPeliculas(@Query("dni") String dni);
+    //Metodo para obtener una pelicula
+    @GET("getPelicula.php")
+    public Call<Pelicula>getPelicula(@Query("ID") int id);
+    //Borrar peliculas
+    @GET("borrarPelicula.php")
+    public Call<Pelicula>borrarPelicula(@Query("ID") int id);
 
     //DIRECTORES
     //Obtener la lista de directores
     @GET("getDirectores.php")
     public Call<List<Director>>getDirectores();
 
-    // Método para obtener un libro por su ID
-    @GET("getLibro.php")
-    public Call<Pelicula> getPelicula(@Query("id") int id);
-
+    //ALQUILERES
+    //Obtener los alquileres por DNI
+    @GET("getAlquiler.php")
+    public Call<List<Alquiler>>getAlquileres();
+    //Ofrecer devolucion
+    @GET("extenderDevolucion.php")
+    public Call<Respuesta>extenderDevolucion(@Query("ID") int idAlquiler);
 
 }

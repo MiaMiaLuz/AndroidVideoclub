@@ -20,7 +20,7 @@ cogerán de los archivos del dispositivo móvil.
         />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="690dp"
+        android:layout_height="650dp"
         android:layout_gravity="bottom"
         android:id="@+id/view"
         />

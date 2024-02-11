@@ -1,6 +1,5 @@
 package com.example.proyectovideoclub.InicioSesion
 
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -14,7 +13,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.proyectovideoclub.Callbacks.UsuarioCallback
-import com.example.proyectovideoclub.Clases.Encriptador
+import com.example.proyectovideoclub.Clases.PasswordChecker
 import com.example.proyectovideoclub.Clases.Usuario
 import com.example.proyectovideoclub.Clases.conexion
 import com.example.proyectovideoclub.DataBase.PeliculaController
@@ -86,8 +85,8 @@ class FragmentInicio : Fragment(), View.OnClickListener, TextWatcher {
             val lc = PeliculaController()
             lc.getUsuario(usuario.Login, object : UsuarioCallback {
                 override fun onUsuarioReceived(usuarioCall: Usuario) {
-                    var encriptador = Encriptador()
-                    if(encriptador.comparar(usuario.Pass, usuarioCall.Pass) && usuario.Trabajador == usuarioCall.Trabajador){
+                    var passwordChecker = PasswordChecker()
+                    if(passwordChecker.comparar(usuario.Pass, usuarioCall.Pass) && usuario.Trabajador == usuarioCall.Trabajador){
                         Toast.makeText(requireContext(),
                             getString(R.string.contrase_a_correcta), Toast.LENGTH_SHORT).show()
                         conexion?.inicioSesion(usuarioCall)

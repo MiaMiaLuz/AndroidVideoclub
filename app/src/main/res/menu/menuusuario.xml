@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/filtros" android:title="Filtrar peliculas">
+        <menu>
+            <item
+                android:id="@+id/titulo"
+                android:title="@string/filtrar_por_t_tulo"
+                 android:checkable="true"
+                ></item>
+            <item
+                android:id="@+id/director"
+                android:title="@string/filtrar_por_director"
+                 android:checkable="true"
+                ></item>
+            <item
+                android:id="@+id/anho"
+                android:title="@string/filtrar_por_a_o_de_lanzamiento"
+                 android:checkable="true"
+                ></item>
+            <item
+                android:id="@+id/iniciar"
+                android:title="@string/filtrar"
+                ></item>
+        </menu>
+    </item>
+    <item android:id="@+id/info" android:title="@string/ver_informaci_n"></item>
+</menu>

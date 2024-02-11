@@ -1,6 +1,6 @@
 package com.example.proyectovideoclub.Vistas_Trabajador
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
@@ -17,25 +17,20 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
 import com.example.proyectovideoclub.Callbacks.AccionCallback
 import com.example.proyectovideoclub.Callbacks.DirectoresCallback
 import com.example.proyectovideoclub.Clases.Director
 import com.example.proyectovideoclub.Clases.Pelicula
 import com.example.proyectovideoclub.DataBase.PeliculaController
 import com.example.proyectovideoclub.R
-import java.util.Calendar
 
 
-class DialogAddPeliculas: DialogFragment(), DialogInterface.OnClickListener, OnItemSelectedListener, View.OnClickListener
-{
+class DialogModificar : DialogFragment, DialogInterface.OnClickListener, View.OnClickListener{
 
     private lateinit var layoutPelis : LinearLayout
-    private lateinit var layoutAutores : LinearLayout
     private lateinit var spinner: Spinner
     var ls = PeliculaController()
 
@@ -48,14 +43,16 @@ class DialogAddPeliculas: DialogFragment(), DialogInterface.OnClickListener, OnI
     var URI : Uri? = null
     var directores = ArrayList<Director>()
     lateinit var directorSpinner: Spinner
-    lateinit var horaSeleccionada : String
-    lateinit var nombreDirectorEditText: EditText
-    lateinit var seleccionarFechaNacimientoButton: Button
 
+    private var pelicula : Pelicula
+    constructor(pelicula: Pelicula){
+        this.pelicula = pelicula
+    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        var builder = AlertDialog.Builder(requireContext())
         var dialog = AlertDialog.Builder(context)
         var inflater = requireActivity().layoutInflater
-        var view : View = inflater.inflate(R.layout.dialogaddpeliculas, null)
+        var view : View = inflater.inflate(R.layout.dialogmodificar, null)
         spinner = view.findViewById(R.id.Selector)
         horas = view.findViewById(R.id.horas)
         horas.maxValue=10
@@ -64,20 +61,22 @@ class DialogAddPeliculas: DialogFragment(), DialogInterface.OnClickListener, OnI
         minutos.maxValue=59
         minutos.minValue = 0
         spinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, arrayListOf("Pelicula", "Director"))
-        layoutPelis = view.findViewById(R.id.Peliadd)
-        layoutAutores = view.findViewById(R.id.addDirector)
-
+        layoutPelis = view.findViewById(R.id.Pelimod)
         tituloEditText = view.findViewById(R.id.Titulo)
         anoEditText = view.findViewById(R.id.Año)
-
-
         elegirPortadaButton = view.findViewById(R.id.Elegir_portada)
         directorSpinner = view.findViewById(R.id.Director)
 
-        nombreDirectorEditText = view.findViewById(R.id.NombreDirectorA)
-        seleccionarFechaNacimientoButton = view.findViewById(R.id.AñoNac)
+        anoEditText.setText(pelicula.year.toString())
+        tituloEditText.setText(pelicula.titulo)
 
-        spinner.onItemSelectedListener = this
+        if(pelicula.duracion != null && pelicula.duracion != ""){
+            val horayminuto = pelicula.duracion.split(":")
+            horas.value = Integer.parseInt(horayminuto[0])
+            minutos.value = Integer.parseInt(horayminuto[1])
+        }
+
+
 
         //Recoger los directores para visualizarlos y asignarlos a la pelicula nueva
         var local = ArrayList<Director>()
@@ -107,18 +106,15 @@ class DialogAddPeliculas: DialogFragment(), DialogInterface.OnClickListener, OnI
         when(which){
             -1->{
                 if(spinner.selectedItem == "Pelicula"){
-                    var peli = Pelicula(
-                        tituloEditText.text.toString(),
-                        "${horas.value}:${minutos.value}",
-                        Integer.parseInt(anoEditText.text.toString()),
-                        directores[directorSpinner.selectedItemPosition].IDDirector,
-                        true,
-                        directorSpinner.selectedItem.toString()
-                    )
-                    if(URI != null){
-                        peli.portada = URI.toString()
+                    pelicula.year = Integer.parseInt(anoEditText.text.toString())
+                    pelicula.titulo = tituloEditText.text.toString()
+                    pelicula.duracion = "${horas.value}:${minutos.value}"
+                    pelicula.year = Integer.parseInt(anoEditText.text.toString())
+
+                if(URI != null){
+                        pelicula.portada = URI.toString()
                     }
-                    ls.createPelicula(peli, object : AccionCallback {
+                    ls.createPelicula(pelicula, object : AccionCallback {
                         override fun onActionCompleted() {
                         }
 
@@ -135,24 +131,6 @@ class DialogAddPeliculas: DialogFragment(), DialogInterface.OnClickListener, OnI
         }
     }
 
-    //Ver la seleccion del Spinner para establecer la visibilidad de los layouts
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if(spinner.selectedItem == "Pelicula"){
-            layoutPelis.visibility = View.VISIBLE
-            layoutPelis.isEnabled = true
-            layoutAutores.visibility = View.GONE
-            layoutAutores.isEnabled = false
-        } else {
-            layoutPelis.visibility = View.GONE
-            layoutPelis.isEnabled = false
-            layoutAutores.visibility = View.VISIBLE
-            layoutAutores.isEnabled = true
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-    }
-
     override fun onClick(v: View?) {
         if(v?.id == R.id.Elegir_portada){
             val pickImg = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
@@ -164,7 +142,7 @@ class DialogAddPeliculas: DialogFragment(), DialogInterface.OnClickListener, OnI
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
-            if (it.resultCode == RESULT_OK) {
+            if (it.resultCode == Activity.RESULT_OK) {
                 val data = it.data
                 val imgUri = data?.data
                 URI = imgUri

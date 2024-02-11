@@ -16,4 +16,12 @@
     <string name="dni_del_usuario">DNI del usuario</string>
     <string name="contrase_a_correcta">Contraseña correcta</string>
     <string name="contrase_a_incorrecta">Contraseña incorrecta</string>
+    <string name="filtrar_por_t_tulo">Filtrar por título</string>
+    <string name="filtrar_por_director">Filtrar por director</string>
+    <string name="filtrar_por_a_o_de_lanzamiento">Filtrar por año de lanzamiento</string>
+    <string name="filtrar">Filtrar</string>
+    <string name="ver_informaci_n">Ver información</string>
+    <string name="no_se_puede_crear_porque_el_usuario_ya_existe">No se puede crear porque el usuario ya existe</string>
+    <string name="la_contrase_a_debe_tener_caracteres_especiales_1_y_tener_como_minimo_7_caracteres">La contraseña debe tener caracteres especiales (1) y tener como minimo 7 caracteres</string>
+    <string name="has_decidido_no_poner_duracion">Has decidido no poner duracion</string>
 </resources>

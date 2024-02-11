@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Peliadd"
+            android:id="@+id/Pelimod"
             android:orientation="vertical"
             android:layout_margin="15dp"
             >
@@ -78,26 +78,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/Director"
                 />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/addDirector"
-            android:orientation="vertical"
-            android:layout_margin="15dp"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre del director"
-                android:id="@+id/NombreDirectorA"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Seleccionar fecha nacimiento"
-                android:id="@+id/AñoNac"/>
         </LinearLayout>
     </FrameLayout>
 

@@ -5,9 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".Vistas_Usuario.FragmentVistaUsuario">
 
-    <!--Registrarse en la aplicación.
-        - Iniciar sesión.
-        - Ver el catálogo de películas disponibles.
+    <!--
         - Filtrar las películas de diferentes formas: título, director, año…
         - Alquilar una película (máximo 5 alquileres a la vez) La fecha de devolución
         siempre será 14 días después de la fecha actual.
@@ -16,13 +14,21 @@
         - Ver el estado de sus propios alquileres, y pedir el aumento de 5 días para
         la devolución. (Sólo se puede pedir 1 vez por alquiler).
      -->
-
-
-    <androidx.recyclerview.widget.RecyclerView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:id="@+id/viewUser"
+        android:choiceMode="multipleChoice"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/botonADDUser"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="15dp"
+        android:src="@android:drawable/ic_menu_add"
+        android:clickable="true"
         />
 
 </FrameLayout>

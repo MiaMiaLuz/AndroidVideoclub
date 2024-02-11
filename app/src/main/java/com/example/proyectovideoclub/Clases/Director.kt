@@ -3,9 +3,9 @@ package com.example.proyectovideoclub.Clases
 import java.io.Serializable
 
 class Director : Serializable{
-    private var IDDirector : Int = 0
-    private lateinit var nombre : String
-    private lateinit var fechaNac : String
+    var IDDirector : Int = 0
+    var nombre : String
+    var fechaNac : String
 
     constructor(IDDirector: Int, nombre: String, fechaNac: String) {
         this.IDDirector = IDDirector
@@ -14,8 +14,7 @@ class Director : Serializable{
     }
 
     override fun toString(): String {
-        return "'$nombre'"
+        return nombre
     }
-
 
 }

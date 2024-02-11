@@ -6,8 +6,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.proyectovideoclub.Clases.Alquiler;
 import com.example.proyectovideoclub.Clases.Director;
 import com.example.proyectovideoclub.Clases.Pelicula;
+import com.example.proyectovideoclub.Clases.Respuesta;
 import com.example.proyectovideoclub.Clases.Usuario;
 import com.google.gson.Gson;
 
@@ -56,36 +58,35 @@ public class PeliculaService {
 
     //PELICULAS
     // Método para insertar una pelicula
-    public void createPelicula(Pelicula pelicula) {
-        getRetrofit().create(PeliculaDAO.class).createPelicula(pelicula).enqueue(
-                new Callback<Pelicula>() {
-                    @Override
-                    public void onResponse(@NonNull Call<Pelicula> call, @NonNull Response<Pelicula> response) {
-                        Log.d("TAG", "RESPONSE: " + response);
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<Pelicula> call, @NonNull Throwable t) {
-                        Log.d("TAG", "Error");
-                        Log.d("TAG", "ERROR: " + t.getMessage());
-                    }
-                }
-        );
+    public Call<Respuesta> createPelicula(Pelicula pelicula) {
+        return getRetrofit().create(PeliculaDAO.class).createPelicula(pelicula);
     }
 
-    //Método para ver todos los libros
-    public Call<List<Pelicula>> getPeliculas()  {
-        return getRetrofit().create(PeliculaDAO.class).getPeliculas();
+    //Método para ver todos las pelicuas
+    public Call<List<Pelicula>> getPeliculas(String dni)  {
+        return getRetrofit().create(PeliculaDAO.class).getPeliculas(dni);
     }
-
-    //Método para ver un libro por ID
+    //Método para ver una pelicula por ID
     public Call<Pelicula> getPelicula(int id) {
         return getRetrofit().create(PeliculaDAO.class).getPelicula(id);
+    }
+    //Metodo para borrar una pelicula
+    public Call<Pelicula> borrarPelicula(int id) {
+        return getRetrofit().create(PeliculaDAO.class).borrarPelicula(id);
     }
 
     //DIRECTORES
     //Obtener los directores
     public Call<List<Director>> getDirectores()  {
         return getRetrofit().create(PeliculaDAO.class).getDirectores();
+    }
+
+    //ALQUILERES
+    //Obtener los alquileres
+    public Call<List<Alquiler>>getAlquileres()  {
+        return getRetrofit().create(PeliculaDAO.class).getAlquileres();
+    }
+    public Call<Respuesta> extenderDevolucion(int idAlquiler) {
+        return getRetrofit().create(PeliculaDAO.class).extenderDevolucion(idAlquiler);
     }
 }

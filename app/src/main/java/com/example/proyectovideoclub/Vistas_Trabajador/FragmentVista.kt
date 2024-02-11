@@ -11,13 +11,16 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.OnCreateContextMenuListener
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.proyectovideoclub.Callbacks.AlquileresCallback
 import com.example.proyectovideoclub.Callbacks.PeliculasCallback
+import com.example.proyectovideoclub.Clases.Alquiler
 import com.example.proyectovideoclub.Clases.Pelicula
 import com.example.proyectovideoclub.Clases.Usuario
 import com.example.proyectovideoclub.Clases.conexion
@@ -25,19 +28,26 @@ import com.example.proyectovideoclub.DataBase.PeliculaController
 import com.example.proyectovideoclub.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class FragmentVista : Fragment(), TextWatcher, View.OnClickListener{
+class FragmentVista : Fragment, TextWatcher, View.OnClickListener, OnCreateContextMenuListener{
+    private var contexto : Context
     private lateinit var filtro : EditText
     private lateinit var recycler : RecyclerView
     private lateinit var boton : FloatingActionButton
     private var local = ArrayList<Pelicula>()
     private lateinit var usuario : Usuario
     private var conexion : conexion? = null
+    constructor(context: Context){
+        this.contexto = context
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //Recibimos en los argumentos el usuario activo
         arguments?.let {
             usuario = arguments?.getSerializable("usuario") as Usuario
         }
+        recycler = RecyclerView(contexto)
         setHasOptionsMenu(true)
+        registerForContextMenu(recycler)
     }
 
     override fun onCreateView(
@@ -48,91 +58,70 @@ class FragmentVista : Fragment(), TextWatcher, View.OnClickListener{
         recycler = view.findViewById(R.id.view)
         filtro = view.findViewById(R.id.filtro)
         boton = view.findViewById(R.id.botonADD)
-        var ls = PeliculaController()
-        ls.getPeliculas(object : PeliculasCallback{
-            override fun onPeliculasReceived(peliculas: java.util.ArrayList<Pelicula>?) {
-                if (peliculas != null) {
-                    local.addAll(peliculas)
-                    actualizar(local)
 
-                }
-            }
-            override fun onFailure(errorMessage: String?) {
-
-            }
-
-        })
+        getPeliculas("")
         registerForContextMenu(recycler)
+        filtro.addTextChangedListener(this)
         boton.setOnClickListener(this)
+
         return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menuprincipal, menu)
-    }
-
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        return super.onContextItemSelected(item)
-        if(item.itemId == R.id.menufiltrar){
-            //Filtrar aqui
-            var alquiladas : ArrayList<Pelicula>
-            actualizar(alquiladas)
-        }
-    }
-
-    override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        activity?.menuInflater?.inflate(R.menu.menucontextual, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
-        if(item.itemId == R.id.devolver){
-
-        } else if (item.itemId == R.id.modificar){
-
-        } else if (item.itemId == R.id.extender){
-
-        }  else if (item.itemId == R.id.eliminar){
-
-        }
-    }
-
     //para actualizar el recycler cuando se hacen cambios
-    fun actualizar(pelicula: ArrayList<Pelicula>){
-        recycler.adapter = AdaptadorR(local)
-        recycler.layoutManager = LinearLayoutManager(requireContext())
+    fun actualizar(pelicula: ArrayList<Pelicula>): ArrayList<Pelicula>{
+        recycler.adapter = AdaptadorR(requireContext(), pelicula)
+        recycler.layoutManager = LinearLayoutManager(contexto)
+        return pelicula
     }
 
     //Cambios en el filtro
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
     }
+    //ARREGLAR
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        //Filtroooo
-        var filtrada : ArrayList<Pelicula>
-        //actualizar(filtrada)
+        getPeliculas(filtro.text.toString())
     }
     override fun afterTextChanged(s: Editable?) {
 
     }
-
+    //Recibimos las peliculas implementando la interfaz para obtenerlas
+    private fun getPeliculas(dni : String){
+        var ls = PeliculaController()
+        local.clear()
+        ls.getPeliculas( dni ,object : PeliculasCallback{
+            override fun onPeliculasReceived(peliculas: java.util.ArrayList<Pelicula>?) {
+                if (peliculas != null) {
+                    local.addAll(peliculas)
+                    actualizar(local)
+                }
+            }
+            override fun onFailure(errorMessage: String?) {
+                Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.menufiltrar){
+            var filtradas = ArrayList<Pelicula>()
+            for(filtrada in local) {
+                if(!filtrada.disponible)
+                    filtradas.add(filtrada)
+            }
+            actualizar(filtradas)
+        } else if(item.itemId == R.id.menutodas){
+            actualizar(local)
+        }
+        return super.onOptionsItemSelected(item)
+    }
     override fun onClick(v: View?) {
         conexion?.triggeradd()
     }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is conexion)
             conexion = context
     }
-
     override fun onDetach() {
         super.onDetach()
         conexion = null
