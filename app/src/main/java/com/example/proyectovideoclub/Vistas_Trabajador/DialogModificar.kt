@@ -112,7 +112,7 @@ class DialogModificar : DialogFragment, DialogInterface.OnClickListener, View.On
                     pelicula.year = Integer.parseInt(anoEditText.text.toString())
 
                 if(URI != null){
-                        pelicula.portada = URI.toString()
+                        //pelicula.portada = URI.toString()
                     }
                     ls.createPelicula(pelicula, object : AccionCallback {
                         override fun onActionCompleted() {

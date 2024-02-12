@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filtroTitulo"
+        android:hint="Título"
+        android:layout_marginVertical="15dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/filtroDirector"
+        android:hint="Director"
+        android:layout_marginVertical="15dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/filtroAnho"
+        android:maxLength="4"
+        android:hint="Año"
+        android:layout_marginVertical="15dp"
+        />
+
+
+</LinearLayout>

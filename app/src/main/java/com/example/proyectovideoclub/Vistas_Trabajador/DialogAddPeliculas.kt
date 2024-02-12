@@ -3,8 +3,12 @@ package com.example.proyectovideoclub.Vistas_Trabajador
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,18 +21,17 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
 import com.example.proyectovideoclub.Callbacks.AccionCallback
 import com.example.proyectovideoclub.Callbacks.DirectoresCallback
 import com.example.proyectovideoclub.Clases.Director
 import com.example.proyectovideoclub.Clases.Pelicula
 import com.example.proyectovideoclub.DataBase.PeliculaController
 import com.example.proyectovideoclub.R
-import java.util.Calendar
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 
 
 class DialogAddPeliculas: DialogFragment(), DialogInterface.OnClickListener, OnItemSelectedListener, View.OnClickListener
@@ -116,7 +119,14 @@ class DialogAddPeliculas: DialogFragment(), DialogInterface.OnClickListener, OnI
                         directorSpinner.selectedItem.toString()
                     )
                     if(URI != null){
-                        peli.portada = URI.toString()
+                        val cv = ContentValues()
+                        val inputStream =  activity?.contentResolver?.openInputStream(URI!!)
+                        val drawable = Drawable.createFromStream(inputStream, URI.toString())
+                        val bitmap = (drawable as BitmapDrawable).bitmap
+                        val baos = ByteArrayOutputStream()
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                        val b = baos.toByteArray()
+                        peli.portada = b
                     }
                     ls.createPelicula(peli, object : AccionCallback {
                         override fun onActionCompleted() {

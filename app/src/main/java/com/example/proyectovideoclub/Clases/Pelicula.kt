@@ -8,18 +8,20 @@ class Pelicula : Serializable {
     var titulo : String
     var duracion : String
     var year : Int = 0
-    lateinit var portada : String
+    var portada : ByteArray? = null
     var ID_director : Int = 0
     var disponible : Boolean = true
     var imagen : Int = 0
     var nombreDirector : String
     var ID_AlquilerVigente : Int = 0
+    //para el layout del usuario
+    var check : Boolean = false
     constructor(
         ID: Int,
         titulo: String,
         duracion: String,
         año: Int,
-        portada: String,
+        portada: ByteArray,
         ID_director: Int,
         disponible: Boolean,
         nombreDirector: String,

@@ -34,7 +34,6 @@ class AdaptadorR(): RecyclerView.Adapter<AdaptadorR.ViewHolder>(){
 
         return ViewHolder(v, context)
     }
-
     override fun onBindViewHolder(holder: AdaptadorR.ViewHolder, position: Int) {
         val peli = peliculas[position]
 

@@ -114,7 +114,6 @@ public class PeliculaController {
                         }
                         callback.onPeliculasReceived(peliculas);
                     }
-
                     @Override
                     public void onFailure(@NonNull Call<List<Pelicula>> call, @NonNull Throwable t) {
                         Log.d("Error", Objects.requireNonNull(t.getMessage()));
